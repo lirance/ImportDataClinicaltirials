@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.StudyMapper">
+    <resultMap id="BaseResultMap" type="model.Study">
+        <id column="nct_id" jdbcType="VARCHAR" property="nctId"/>
+        <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="source" jdbcType="VARCHAR" property="source"/>
+        <result column="overall_status" jdbcType="VARCHAR" property="overallStatus"/>
+        <result column="phase" jdbcType="VARCHAR" property="phase"/>
+        <result column="study_type" jdbcType="VARCHAR" property="studyType"/>
+        <result column="study_first_submitted" jdbcType="VARCHAR" property="studyFirstSubmitted"/>
+        <result column="results_first_submitted" jdbcType="VARCHAR" property="resultsFirstSubmitted"/>
+        <result column="contact_id" jdbcType="INTEGER" property="contactId"/>
+        <result column="official_title" jdbcType="VARCHAR" property="officialTitle"/>
+        <result column="start_date" jdbcType="VARCHAR" property="startDate"/>
+        <result column="criter_id" jdbcType="INTEGER" property="criterId"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="model.StudyWithBLOBs">
+        <result column="brief_title" jdbcType="LONGVARCHAR" property="briefTitle"/>
+        <result column="brief_summary" jdbcType="LONGVARCHAR" property="briefSummary"/>
+        <result column="detailed_description" jdbcType="LONGVARCHAR" property="detailedDescription"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    nct_id, url, source, overall_status, phase, study_type, study_first_submitted, results_first_submitted, 
+    contact_id, official_title, start_date, criter_id
+  </sql>
+    <sql id="Blob_Column_List">
+    brief_title, brief_summary, detailed_description
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from study
+        where nct_id = #{nctId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from study
+    where nct_id = #{nctId,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="model.StudyWithBLOBs">
+    insert into study (nct_id, url, source, 
+      overall_status, phase, study_type, 
+      study_first_submitted, results_first_submitted, 
+      contact_id, official_title, start_date, 
+      criter_id, brief_title, brief_summary, 
+      detailed_description)
+    values (#{nctId,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{source,jdbcType=VARCHAR}, 
+      #{overallStatus,jdbcType=VARCHAR}, #{phase,jdbcType=VARCHAR}, #{studyType,jdbcType=VARCHAR}, 
+      #{studyFirstSubmitted,jdbcType=VARCHAR}, #{resultsFirstSubmitted,jdbcType=VARCHAR}, 
+      #{contactId,jdbcType=INTEGER}, #{officialTitle,jdbcType=VARCHAR}, #{startDate,jdbcType=VARCHAR}, 
+      #{criterId,jdbcType=INTEGER}, #{briefTitle,jdbcType=LONGVARCHAR}, #{briefSummary,jdbcType=LONGVARCHAR}, 
+      #{detailedDescription,jdbcType=LONGVARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="model.StudyWithBLOBs">
+        insert into study
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="nctId != null">
+                nct_id,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+            <if test="source != null">
+                source,
+            </if>
+            <if test="overallStatus != null">
+                overall_status,
+            </if>
+            <if test="phase != null">
+                phase,
+            </if>
+            <if test="studyType != null">
+                study_type,
+            </if>
+            <if test="studyFirstSubmitted != null">
+                study_first_submitted,
+            </if>
+            <if test="resultsFirstSubmitted != null">
+                results_first_submitted,
+            </if>
+            <if test="contactId != null">
+                contact_id,
+            </if>
+            <if test="officialTitle != null">
+                official_title,
+            </if>
+            <if test="startDate != null">
+                start_date,
+            </if>
+            <if test="criterId != null">
+                criter_id,
+            </if>
+            <if test="briefTitle != null">
+                brief_title,
+            </if>
+            <if test="briefSummary != null">
+                brief_summary,
+            </if>
+            <if test="detailedDescription != null">
+                detailed_description,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="nctId != null">
+                #{nctId,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="source != null">
+                #{source,jdbcType=VARCHAR},
+            </if>
+            <if test="overallStatus != null">
+                #{overallStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="phase != null">
+                #{phase,jdbcType=VARCHAR},
+            </if>
+            <if test="studyType != null">
+                #{studyType,jdbcType=VARCHAR},
+            </if>
+            <if test="studyFirstSubmitted != null">
+                #{studyFirstSubmitted,jdbcType=VARCHAR},
+            </if>
+            <if test="resultsFirstSubmitted != null">
+                #{resultsFirstSubmitted,jdbcType=VARCHAR},
+            </if>
+            <if test="contactId != null">
+                #{contactId,jdbcType=INTEGER},
+            </if>
+            <if test="officialTitle != null">
+                #{officialTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="startDate != null">
+                #{startDate,jdbcType=VARCHAR},
+            </if>
+            <if test="criterId != null">
+                #{criterId,jdbcType=INTEGER},
+            </if>
+            <if test="briefTitle != null">
+                #{briefTitle,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="briefSummary != null">
+                #{briefSummary,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="detailedDescription != null">
+                #{detailedDescription,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="model.StudyWithBLOBs">
+        update study
+        <set>
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="source != null">
+                source = #{source,jdbcType=VARCHAR},
+            </if>
+            <if test="overallStatus != null">
+                overall_status = #{overallStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="phase != null">
+                phase = #{phase,jdbcType=VARCHAR},
+            </if>
+            <if test="studyType != null">
+                study_type = #{studyType,jdbcType=VARCHAR},
+            </if>
+            <if test="studyFirstSubmitted != null">
+                study_first_submitted = #{studyFirstSubmitted,jdbcType=VARCHAR},
+            </if>
+            <if test="resultsFirstSubmitted != null">
+                results_first_submitted = #{resultsFirstSubmitted,jdbcType=VARCHAR},
+            </if>
+            <if test="contactId != null">
+                contact_id = #{contactId,jdbcType=INTEGER},
+            </if>
+            <if test="officialTitle != null">
+                official_title = #{officialTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="startDate != null">
+                start_date = #{startDate,jdbcType=VARCHAR},
+            </if>
+            <if test="criterId != null">
+                criter_id = #{criterId,jdbcType=INTEGER},
+            </if>
+            <if test="briefTitle != null">
+                brief_title = #{briefTitle,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="briefSummary != null">
+                brief_summary = #{briefSummary,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="detailedDescription != null">
+                detailed_description = #{detailedDescription,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where nct_id = #{nctId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="model.StudyWithBLOBs">
+    update study
+    set url = #{url,jdbcType=VARCHAR},
+      source = #{source,jdbcType=VARCHAR},
+      overall_status = #{overallStatus,jdbcType=VARCHAR},
+      phase = #{phase,jdbcType=VARCHAR},
+      study_type = #{studyType,jdbcType=VARCHAR},
+      study_first_submitted = #{studyFirstSubmitted,jdbcType=VARCHAR},
+      results_first_submitted = #{resultsFirstSubmitted,jdbcType=VARCHAR},
+      contact_id = #{contactId,jdbcType=INTEGER},
+      official_title = #{officialTitle,jdbcType=VARCHAR},
+      start_date = #{startDate,jdbcType=VARCHAR},
+      criter_id = #{criterId,jdbcType=INTEGER},
+      brief_title = #{briefTitle,jdbcType=LONGVARCHAR},
+      brief_summary = #{briefSummary,jdbcType=LONGVARCHAR},
+      detailed_description = #{detailedDescription,jdbcType=LONGVARCHAR}
+    where nct_id = #{nctId,jdbcType=VARCHAR}
+  </update>
+    <update id="updateByPrimaryKey" parameterType="model.Study">
+    update study
+    set url = #{url,jdbcType=VARCHAR},
+      source = #{source,jdbcType=VARCHAR},
+      overall_status = #{overallStatus,jdbcType=VARCHAR},
+      phase = #{phase,jdbcType=VARCHAR},
+      study_type = #{studyType,jdbcType=VARCHAR},
+      study_first_submitted = #{studyFirstSubmitted,jdbcType=VARCHAR},
+      results_first_submitted = #{resultsFirstSubmitted,jdbcType=VARCHAR},
+      contact_id = #{contactId,jdbcType=INTEGER},
+      official_title = #{officialTitle,jdbcType=VARCHAR},
+      start_date = #{startDate,jdbcType=VARCHAR},
+      criter_id = #{criterId,jdbcType=INTEGER}
+    where nct_id = #{nctId,jdbcType=VARCHAR}
+  </update>
+</mapper>

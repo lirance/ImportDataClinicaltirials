@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.CriteriaMapper">
+    <resultMap id="BaseResultMap" type="model.Criteria">
+        <id column="criter_id" jdbcType="INTEGER" property="criterId"/>
+        <result column="gender" jdbcType="VARCHAR" property="gender"/>
+        <result column="minimum_age" jdbcType="VARCHAR" property="minimumAge"/>
+        <result column="maximum_age" jdbcType="VARCHAR" property="maximumAge"/>
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="model.Criteria">
+        <result column="criteriaI_text" jdbcType="LONGVARCHAR" property="criteriaiText"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    criter_id, gender, minimum_age, maximum_age
+  </sql>
+    <sql id="Blob_Column_List">
+    criteriaI_text
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from criteria
+        where criter_id = #{criterId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from criteria
+    where criter_id = #{criterId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="model.Criteria" useGeneratedKeys="true"
+            keyProperty="criterId">
+    insert into criteria (gender, minimum_age,
+      maximum_age, criteriaI_text)
+    values (#{gender,jdbcType=VARCHAR}, #{minimumAge,jdbcType=VARCHAR},
+      #{maximumAge,jdbcType=VARCHAR}, #{criteriaiText,jdbcType=LONGVARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="model.Criteria">
+        insert into criteria
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="criterId != null">
+                criter_id,
+            </if>
+            <if test="gender != null">
+                gender,
+            </if>
+            <if test="minimumAge != null">
+                minimum_age,
+            </if>
+            <if test="maximumAge != null">
+                maximum_age,
+            </if>
+            <if test="criteriaiText != null">
+                criteriaI_text,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="criterId != null">
+                #{criterId,jdbcType=INTEGER},
+            </if>
+            <if test="gender != null">
+                #{gender,jdbcType=VARCHAR},
+            </if>
+            <if test="minimumAge != null">
+                #{minimumAge,jdbcType=VARCHAR},
+            </if>
+            <if test="maximumAge != null">
+                #{maximumAge,jdbcType=VARCHAR},
+            </if>
+            <if test="criteriaiText != null">
+                #{criteriaiText,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="model.Criteria">
+        update criteria
+        <set>
+            <if test="gender != null">
+                gender = #{gender,jdbcType=VARCHAR},
+            </if>
+            <if test="minimumAge != null">
+                minimum_age = #{minimumAge,jdbcType=VARCHAR},
+            </if>
+            <if test="maximumAge != null">
+                maximum_age = #{maximumAge,jdbcType=VARCHAR},
+            </if>
+            <if test="criteriaiText != null">
+                criteriaI_text = #{criteriaiText,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where criter_id = #{criterId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="model.Criteria">
+    update criteria
+    set gender = #{gender,jdbcType=VARCHAR},
+      minimum_age = #{minimumAge,jdbcType=VARCHAR},
+      maximum_age = #{maximumAge,jdbcType=VARCHAR},
+      criteriaI_text = #{criteriaiText,jdbcType=LONGVARCHAR}
+    where criter_id = #{criterId,jdbcType=INTEGER}
+  </update>
+    <update id="updateByPrimaryKey" parameterType="model.Criteria">
+    update criteria
+    set gender = #{gender,jdbcType=VARCHAR},
+      minimum_age = #{minimumAge,jdbcType=VARCHAR},
+      maximum_age = #{maximumAge,jdbcType=VARCHAR}
+    where criter_id = #{criterId,jdbcType=INTEGER}
+  </update>
+</mapper>

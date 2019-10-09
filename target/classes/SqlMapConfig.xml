@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- 和spring整合后 environments配置将废除-->
+    <environments default="development">
+        <environment id="development">
+            <!-- 使用jdbc事务管理-->
+            <transactionManager type="JDBC"/>
+            <!-- 数据库连接池-->
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://classmysql.engr.oregonstate.edu:3306/cs540_zhangch3"/>
+                <property name="username" value="cs540_zhangch3"/>
+                <property name="password" value="8748"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <mapper resource="mapper/ContactMapper.xml"/>
+        <mapper resource="mapper/CriteriaMapper.xml"/>
+        <mapper resource="mapper/InteroberMapper.xml"/>
+        <mapper resource="mapper/InteroberStudyMapper.xml"/>
+        <mapper resource="mapper/KeywordMapper.xml"/>
+        <mapper resource="mapper/KeywordStudyMapper.xml"/>
+        <mapper resource="mapper/LocationMapper.xml"/>
+        <mapper resource="mapper/LocationStudyMapper.xml"/>
+        <mapper resource="mapper/OutcomeMapper.xml"/>
+        <mapper resource="mapper/SponsorMapper.xml"/>
+        <mapper resource="mapper/SponsorStudyMapper.xml"/>
+        <mapper resource="mapper/StudyMapper.xml"/>
+        <mapper resource="mapper/TestTableMapper.xml"/>
+    </mappers>
+
+</configuration>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.OutcomeMapper">
+    <resultMap id="BaseResultMap" type="model.Outcome">
+        <id column="nct_id" jdbcType="VARCHAR" property="nctId"/>
+        <id column="outcome_type" jdbcType="VARCHAR" property="outcomeType"/>
+        <result column="outcome_title" jdbcType="VARCHAR" property="outcomeTitle"/>
+        <result column="outcome_descripition" jdbcType="VARCHAR" property="outcomeDescripition"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    nct_id, outcome_type, outcome_title, outcome_descripition
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="model.OutcomeKey" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from outcome
+        where nct_id = #{nctId,jdbcType=VARCHAR}
+        and outcome_type = #{outcomeType,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="model.OutcomeKey">
+    delete from outcome
+    where nct_id = #{nctId,jdbcType=VARCHAR}
+      and outcome_type = #{outcomeType,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="model.Outcome">
+    insert into outcome (nct_id, outcome_type, outcome_title, 
+      outcome_descripition)
+    values (#{nctId,jdbcType=VARCHAR}, #{outcomeType,jdbcType=VARCHAR}, #{outcomeTitle,jdbcType=VARCHAR}, 
+      #{outcomeDescripition,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="model.Outcome">
+        insert into outcome
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="nctId != null">
+                nct_id,
+            </if>
+            <if test="outcomeType != null">
+                outcome_type,
+            </if>
+            <if test="outcomeTitle != null">
+                outcome_title,
+            </if>
+            <if test="outcomeDescripition != null">
+                outcome_descripition,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="nctId != null">
+                #{nctId,jdbcType=VARCHAR},
+            </if>
+            <if test="outcomeType != null">
+                #{outcomeType,jdbcType=VARCHAR},
+            </if>
+            <if test="outcomeTitle != null">
+                #{outcomeTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="outcomeDescripition != null">
+                #{outcomeDescripition,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="model.Outcome">
+        update outcome
+        <set>
+            <if test="outcomeTitle != null">
+                outcome_title = #{outcomeTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="outcomeDescripition != null">
+                outcome_descripition = #{outcomeDescripition,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where nct_id = #{nctId,jdbcType=VARCHAR}
+        and outcome_type = #{outcomeType,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="model.Outcome">
+    update outcome
+    set outcome_title = #{outcomeTitle,jdbcType=VARCHAR},
+      outcome_descripition = #{outcomeDescripition,jdbcType=VARCHAR}
+    where nct_id = #{nctId,jdbcType=VARCHAR}
+      and outcome_type = #{outcomeType,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.KeywordStudyMapper">
+    <resultMap id="BaseResultMap" type="model.KeywordStudyKey">
+        <id column="nct_id" jdbcType="VARCHAR" property="nctId"/>
+        <id column="keyword_id" jdbcType="INTEGER" property="keywordId"/>
+    </resultMap>
+    <delete id="deleteByPrimaryKey" parameterType="model.KeywordStudyKey">
+    delete from keyword_study
+    where nct_id = #{nctId,jdbcType=VARCHAR}
+      and keyword_id = #{keywordId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="model.KeywordStudyKey">
+    insert into keyword_study (nct_id, keyword_id)
+    values (#{nctId,jdbcType=VARCHAR}, #{keywordId,jdbcType=INTEGER})
+  </insert>
+    <insert id="insertSelective" parameterType="model.KeywordStudyKey">
+        insert into keyword_study
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="nctId != null">
+                nct_id,
+            </if>
+            <if test="keywordId != null">
+                keyword_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="nctId != null">
+                #{nctId,jdbcType=VARCHAR},
+            </if>
+            <if test="keywordId != null">
+                #{keywordId,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+</mapper>

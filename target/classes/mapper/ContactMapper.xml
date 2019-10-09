@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.ContactMapper">
+    <resultMap id="BaseResultMap" type="model.Contact">
+        <id column="contact_id" jdbcType="INTEGER" property="contactId"/>
+        <result column="organization" jdbcType="VARCHAR" property="organization"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    contact_id, organization, name, phone, email
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from contact
+        where contact_id = #{contactId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from contact
+    where contact_id = #{contactId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="model.Contact" useGeneratedKeys="true"
+            keyProperty="contactId">
+    insert into contact (organization, name,
+      phone, email)
+    values (#{organization,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+      #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="model.Contact">
+        insert into contact
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="contactId != null">
+                contact_id,
+            </if>
+            <if test="organization != null">
+                organization,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="contactId != null">
+                #{contactId,jdbcType=INTEGER},
+            </if>
+            <if test="organization != null">
+                #{organization,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="model.Contact">
+        update contact
+        <set>
+            <if test="organization != null">
+                organization = #{organization,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where contact_id = #{contactId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="model.Contact">
+    update contact
+    set organization = #{organization,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR}
+    where contact_id = #{contactId,jdbcType=INTEGER}
+  </update>
+</mapper>

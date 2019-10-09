@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.SponsorStudyMapper">
+    <resultMap id="BaseResultMap" type="model.SponsorStudy">
+        <id column="nct_id" jdbcType="VARCHAR" property="nctId"/>
+        <id column="sponsor_id" jdbcType="INTEGER" property="sponsorId"/>
+        <result column="sponsor_type" jdbcType="VARCHAR" property="sponsorType"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    nct_id, sponsor_id, sponsor_type
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="model.SponsorStudyKey" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sponsor_study
+        where nct_id = #{nctId,jdbcType=VARCHAR}
+        and sponsor_id = #{sponsorId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="model.SponsorStudyKey">
+    delete from sponsor_study
+    where nct_id = #{nctId,jdbcType=VARCHAR}
+      and sponsor_id = #{sponsorId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="model.SponsorStudy">
+    insert into sponsor_study (nct_id, sponsor_id, sponsor_type
+      )
+    values (#{nctId,jdbcType=VARCHAR}, #{sponsorId,jdbcType=INTEGER}, #{sponsorType,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="model.SponsorStudy">
+        insert into sponsor_study
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="nctId != null">
+                nct_id,
+            </if>
+            <if test="sponsorId != null">
+                sponsor_id,
+            </if>
+            <if test="sponsorType != null">
+                sponsor_type,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="nctId != null">
+                #{nctId,jdbcType=VARCHAR},
+            </if>
+            <if test="sponsorId != null">
+                #{sponsorId,jdbcType=INTEGER},
+            </if>
+            <if test="sponsorType != null">
+                #{sponsorType,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="model.SponsorStudy">
+        update sponsor_study
+        <set>
+            <if test="sponsorType != null">
+                sponsor_type = #{sponsorType,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where nct_id = #{nctId,jdbcType=VARCHAR}
+        and sponsor_id = #{sponsorId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="model.SponsorStudy">
+    update sponsor_study
+    set sponsor_type = #{sponsorType,jdbcType=VARCHAR}
+    where nct_id = #{nctId,jdbcType=VARCHAR}
+      and sponsor_id = #{sponsorId,jdbcType=INTEGER}
+  </update>
+</mapper>
